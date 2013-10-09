@@ -439,7 +439,8 @@
     size.height = ceilf(size.height * scale) / scale;
     UIGraphicsBeginImageContextWithOptions(self.bounds.size, YES, scale);
     CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextTranslateCTM(context, -self.frame.origin.x, -self.frame.origin.y);
+    CGPoint origin = [self.superview convertPoint:self.blurredView.frame.origin fromView:self.blurredView];
+    CGContextTranslateCTM(context, origin.x - self.frame.origin.x, origin.y - self.frame.origin.y);
     CGContextScaleCTM(context, size.width / self.bounds.size.width, size.height / self.bounds.size.height);
     NSArray *hiddenViews = [self prepareSuperviewForSnapshot:superview];
     [superview.layer renderInContext:context];
